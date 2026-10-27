@@ -19,6 +19,13 @@ const authenticate = async (req, res, next) => {
 
     const token = authHeader.split(' ')[1];
 
+    // Demo token fast-path (used for 1-click demonstration accounts)
+    if (token && token.startsWith('demo-')) {
+      const role = token.includes('consumer') ? 'consumer' : 'admin';
+      req.user = memoryProfileFallback(role);
+      return next();
+    }
+
     if (isLiveSupabase) {
       const { data: { user }, error } = await supabase.auth.getUser(token);
       if (error || !user) {
@@ -36,8 +43,8 @@ const authenticate = async (req, res, next) => {
       return next();
     }
 
-    // In demo mode with token string (e.g. 'demo-admin-token' or 'demo-consumer-token')
-    const role = token.includes('consumer') ? 'consumer' : 'admin';
+    // Default fallback
+    const role = token && token.includes('consumer') ? 'consumer' : 'admin';
     req.user = memoryProfileFallback(role);
     return next();
   } catch (err) {

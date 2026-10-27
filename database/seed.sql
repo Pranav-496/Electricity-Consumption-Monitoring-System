@@ -30,6 +30,18 @@ BEGIN
             (v_consumer2_id, '00000000-0000-0000-0000-000000000000', 'rajesh.sharma@example.com', crypt('Consumer@123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"username":"rajesh_sharma","full_name":"Rajesh Sharma"}', now(), now(), 'authenticated', 'authenticated'),
             (v_consumer3_id, '00000000-0000-0000-0000-000000000000', 'techcorp@example.com', crypt('Consumer@123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"username":"techcorp","full_name":"TechCorp Logistics"}', now(), now(), 'authenticated', 'authenticated')
         ON CONFLICT (id) DO NOTHING;
+
+        INSERT INTO auth.identities (id, user_id, provider_id, identity_data, provider, created_at, updated_at)
+        SELECT 
+            id,
+            id,
+            id::text,
+            json_build_object('sub', id::text, 'email', email),
+            'email',
+            now(),
+            now()
+        FROM auth.users
+        ON CONFLICT (provider_id, provider) DO NOTHING;
     END IF;
 
     -- Upsert Profiles
