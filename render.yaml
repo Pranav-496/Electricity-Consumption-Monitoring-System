@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: ecms-backend-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: SUPABASE_URL
+        value: https://ufoqlplrofftqrqekajx.supabase.co
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: DATABASE_URL
+        value: postgresql://postgres.ufoqlplrofftqrqekajx:Heisenberg%40409600@aws-0-ap-northeast-2.pooler.supabase.com:6543/postgres
+      - key: ENABLE_DEMO_FALLBACK
+        value: "false"

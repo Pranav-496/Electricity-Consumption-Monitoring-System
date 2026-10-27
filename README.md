@@ -218,6 +218,7 @@ For deep-dive documentation on specific subsystems, consult the `docs/` folder:
 - [Database Design & Normalization](file:///d:/Electricity-Consumption-Monitoring-System/docs/DATABASE_DESIGN.md)
 - [REST API Specification](file:///d:/Electricity-Consumption-Monitoring-System/docs/API_DOCUMENTATION.md)
 - [Business Rules & Calculation Formulas](file:///d:/Electricity-Consumption-Monitoring-System/docs/BUSINESS_RULES.md)
+- [Deployment Guide (Render & Vercel)](file:///d:/Electricity-Consumption-Monitoring-System/docs/DEPLOYMENT_GUIDE.md)
 - [Setup & Demonstration Walkthrough](file:///d:/Electricity-Consumption-Monitoring-System/docs/SETUP_GUIDE.md)
 - [Database SQL Scripts & Execution Guide](file:///d:/Electricity-Consumption-Monitoring-System/database/README.md)
 

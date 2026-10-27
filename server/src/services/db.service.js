@@ -27,31 +27,31 @@ const memoryStore = {
     { id: 'c5555555-0000-0000-0000-000000000005', name: 'GreenValley Supermarket', address: '77 Greenway Boulevard', contact: '+1-555-0144', email: 'greenvalley@example.com', user_id: 'a0000000-0000-0000-0000-000000000001', consumer_user_id: null, is_active: true, created_at: new Date('2024-01-18').toISOString() }
   ],
   meters: [
-    { id: 'm1111111-0000-0000-0000-000000000001', meter_number: 'MTR-2024-001', consumer_id: 'c1111111-0000-0000-0000-000000000001', installation_date: '2023-01-15', meter_type: 'Smart Meter', meter_status: 'active', tariff_id: '11111111-1111-1111-1111-111111111111', created_at: new Date('2023-01-15').toISOString() },
-    { id: 'm2222222-0000-0000-0000-000000000002', meter_number: 'MTR-2024-002', consumer_id: 'c2222222-0000-0000-0000-000000000002', installation_date: '2023-03-20', meter_type: 'Three Phase', meter_status: 'active', tariff_id: '22222222-2222-2222-2222-222222222222', created_at: new Date('2023-03-20').toISOString() },
-    { id: 'm3333333-0000-0000-0000-000000000003', meter_number: 'MTR-2024-003', consumer_id: 'c3333333-0000-0000-0000-000000000003', installation_date: '2023-06-10', meter_type: 'Three Phase', meter_status: 'active', tariff_id: '33333333-3333-3333-3333-333333333333', created_at: new Date('2023-06-10').toISOString() },
-    { id: 'm4444444-0000-0000-0000-000000000004', meter_number: 'MTR-2024-004', consumer_id: 'c4444444-0000-0000-0000-000000000004', installation_date: '2023-08-05', meter_type: 'Single Phase', meter_status: 'active', tariff_id: '11111111-1111-1111-1111-111111111111', created_at: new Date('2023-08-05').toISOString() },
-    { id: 'm5555555-0000-0000-0000-000000000005', meter_number: 'MTR-2024-005', consumer_id: 'c5555555-0000-0000-0000-000000000005', installation_date: '2023-10-12', meter_type: 'Digital', meter_status: 'active', tariff_id: '22222222-2222-2222-2222-222222222222', created_at: new Date('2023-10-12').toISOString() }
+    { id: 'd1111111-0000-0000-0000-000000000001', meter_number: 'MTR-2024-001', consumer_id: 'c1111111-0000-0000-0000-000000000001', installation_date: '2023-01-15', meter_type: 'Smart Meter', meter_status: 'active', tariff_id: '11111111-1111-1111-1111-111111111111', created_at: new Date('2023-01-15').toISOString() },
+    { id: 'd2222222-0000-0000-0000-000000000002', meter_number: 'MTR-2024-002', consumer_id: 'c2222222-0000-0000-0000-000000000002', installation_date: '2023-03-20', meter_type: 'Three Phase', meter_status: 'active', tariff_id: '22222222-2222-2222-2222-222222222222', created_at: new Date('2023-03-20').toISOString() },
+    { id: 'd3333333-0000-0000-0000-000000000003', meter_number: 'MTR-2024-003', consumer_id: 'c3333333-0000-0000-0000-000000000003', installation_date: '2023-06-10', meter_type: 'Three Phase', meter_status: 'active', tariff_id: '33333333-3333-3333-3333-333333333333', created_at: new Date('2023-06-10').toISOString() },
+    { id: 'd4444444-0000-0000-0000-000000000004', meter_number: 'MTR-2024-004', consumer_id: 'c4444444-0000-0000-0000-000000000004', installation_date: '2023-08-05', meter_type: 'Single Phase', meter_status: 'active', tariff_id: '11111111-1111-1111-1111-111111111111', created_at: new Date('2023-08-05').toISOString() },
+    { id: 'd5555555-0000-0000-0000-000000000005', meter_number: 'MTR-2024-005', consumer_id: 'c5555555-0000-0000-0000-000000000005', installation_date: '2023-10-12', meter_type: 'Digital', meter_status: 'active', tariff_id: '22222222-2222-2222-2222-222222222222', created_at: new Date('2023-10-12').toISOString() }
   ],
   consumption_readings: [
-    { meter_id: 'm1111111-0000-0000-0000-000000000001', reading_date: '2024-01-31', previous_reading: 1000.00, current_reading: 1220.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
-    { meter_id: 'm1111111-0000-0000-0000-000000000001', reading_date: '2024-02-29', previous_reading: 1220.00, current_reading: 1465.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
-    { meter_id: 'm1111111-0000-0000-0000-000000000001', reading_date: '2024-03-31', previous_reading: 1465.00, current_reading: 1780.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
-    { meter_id: 'm1111111-0000-0000-0000-000000000001', reading_date: '2024-04-30', previous_reading: 1780.00, current_reading: 2390.00, created_by: 'a0000000-0000-0000-0000-000000000001' }, // 610 units spike
+    { meter_id: 'd1111111-0000-0000-0000-000000000001', reading_date: '2024-01-31', previous_reading: 1000.00, current_reading: 1220.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
+    { meter_id: 'd1111111-0000-0000-0000-000000000001', reading_date: '2024-02-29', previous_reading: 1220.00, current_reading: 1465.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
+    { meter_id: 'd1111111-0000-0000-0000-000000000001', reading_date: '2024-03-31', previous_reading: 1465.00, current_reading: 1780.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
+    { meter_id: 'd1111111-0000-0000-0000-000000000001', reading_date: '2024-04-30', previous_reading: 1780.00, current_reading: 2390.00, created_by: 'a0000000-0000-0000-0000-000000000001' }, // 610 units spike
 
-    { meter_id: 'm2222222-0000-0000-0000-000000000002', reading_date: '2024-01-31', previous_reading: 2500.00, current_reading: 3120.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
-    { meter_id: 'm2222222-0000-0000-0000-000000000002', reading_date: '2024-02-29', previous_reading: 3120.00, current_reading: 3780.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
-    { meter_id: 'm2222222-0000-0000-0000-000000000002', reading_date: '2024-03-31', previous_reading: 3780.00, current_reading: 4490.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
-    { meter_id: 'm2222222-0000-0000-0000-000000000002', reading_date: '2024-04-30', previous_reading: 4490.00, current_reading: 5210.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
+    { meter_id: 'd2222222-0000-0000-0000-000000000002', reading_date: '2024-01-31', previous_reading: 2500.00, current_reading: 3120.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
+    { meter_id: 'd2222222-0000-0000-0000-000000000002', reading_date: '2024-02-29', previous_reading: 3120.00, current_reading: 3780.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
+    { meter_id: 'd2222222-0000-0000-0000-000000000002', reading_date: '2024-03-31', previous_reading: 3780.00, current_reading: 4490.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
+    { meter_id: 'd2222222-0000-0000-0000-000000000002', reading_date: '2024-04-30', previous_reading: 4490.00, current_reading: 5210.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
 
-    { meter_id: 'm3333333-0000-0000-0000-000000000003', reading_date: '2024-02-29', previous_reading: 10000.00, current_reading: 13400.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
-    { meter_id: 'm3333333-0000-0000-0000-000000000003', reading_date: '2024-03-31', previous_reading: 13400.00, current_reading: 17100.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
-    { meter_id: 'm3333333-0000-0000-0000-000000000003', reading_date: '2024-04-30', previous_reading: 17100.00, current_reading: 20950.00, created_by: 'a0000000-0000-0000-0000-000000000001' }
+    { meter_id: 'd3333333-0000-0000-0000-000000000003', reading_date: '2024-02-29', previous_reading: 10000.00, current_reading: 13400.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
+    { meter_id: 'd3333333-0000-0000-0000-000000000003', reading_date: '2024-03-31', previous_reading: 13400.00, current_reading: 17100.00, created_by: 'a0000000-0000-0000-0000-000000000001' },
+    { meter_id: 'd3333333-0000-0000-0000-000000000003', reading_date: '2024-04-30', previous_reading: 17100.00, current_reading: 20950.00, created_by: 'a0000000-0000-0000-0000-000000000001' }
   ],
   bills: [
     {
       id: 'b1111111-0000-0000-0000-000000000001',
-      meter_id: 'm1111111-0000-0000-0000-000000000001',
+      meter_id: 'd1111111-0000-0000-0000-000000000001',
       reading_date: '2024-01-31',
       bill_date: '2024-02-01',
       billing_period_start: '2024-01-01',
@@ -67,7 +67,7 @@ const memoryStore = {
     },
     {
       id: 'b1111111-0000-0000-0000-000000000002',
-      meter_id: 'm1111111-0000-0000-0000-000000000001',
+      meter_id: 'd1111111-0000-0000-0000-000000000001',
       reading_date: '2024-02-29',
       bill_date: '2024-03-01',
       billing_period_start: '2024-02-01',
@@ -83,7 +83,7 @@ const memoryStore = {
     },
     {
       id: 'b1111111-0000-0000-0000-000000000003',
-      meter_id: 'm1111111-0000-0000-0000-000000000001',
+      meter_id: 'd1111111-0000-0000-0000-000000000001',
       reading_date: '2024-03-31',
       bill_date: '2024-04-01',
       billing_period_start: '2024-03-01',
@@ -99,7 +99,7 @@ const memoryStore = {
     },
     {
       id: 'b1111111-0000-0000-0000-000000000004',
-      meter_id: 'm1111111-0000-0000-0000-000000000001',
+      meter_id: 'd1111111-0000-0000-0000-000000000001',
       reading_date: '2024-04-30',
       bill_date: '2024-05-01',
       billing_period_start: '2024-04-01',
@@ -115,7 +115,7 @@ const memoryStore = {
     },
     {
       id: 'b2222222-0000-0000-0000-000000000001',
-      meter_id: 'm2222222-0000-0000-0000-000000000002',
+      meter_id: 'd2222222-0000-0000-0000-000000000002',
       reading_date: '2024-01-31',
       bill_date: '2024-02-01',
       billing_period_start: '2024-01-01',
@@ -131,7 +131,7 @@ const memoryStore = {
     },
     {
       id: 'b2222222-0000-0000-0000-000000000002',
-      meter_id: 'm2222222-0000-0000-0000-000000000002',
+      meter_id: 'd2222222-0000-0000-0000-000000000002',
       reading_date: '2024-02-29',
       bill_date: '2024-03-01',
       billing_period_start: '2024-02-01',
@@ -148,7 +148,7 @@ const memoryStore = {
   ],
   payments: [
     {
-      id: 'p1111111-0000-0000-0000-000000000001',
+      id: 'e1111111-0000-0000-0000-000000000001',
       bill_id: 'b1111111-0000-0000-0000-000000000001',
       payment_date: '2024-02-10T14:30:00.000Z',
       amount: 1359.75,
@@ -158,7 +158,7 @@ const memoryStore = {
       created_at: '2024-02-10T14:30:00.000Z'
     },
     {
-      id: 'p1111111-0000-0000-0000-000000000002',
+      id: 'e1111111-0000-0000-0000-000000000002',
       bill_id: 'b1111111-0000-0000-0000-000000000002',
       payment_date: '2024-03-12T11:15:00.000Z',
       amount: 1504.13,
@@ -168,7 +168,7 @@ const memoryStore = {
       created_at: '2024-03-12T11:15:00.000Z'
     },
     {
-      id: 'p1111111-0000-0000-0000-000000000003',
+      id: 'e1111111-0000-0000-0000-000000000003',
       bill_id: 'b1111111-0000-0000-0000-000000000003',
       payment_date: '2024-04-15T16:45:00.000Z',
       amount: 1000.00,
@@ -178,7 +178,7 @@ const memoryStore = {
       created_at: '2024-04-15T16:45:00.000Z'
     },
     {
-      id: 'p2222222-0000-0000-0000-000000000001',
+      id: 'e2222222-0000-0000-0000-000000000001',
       bill_id: 'b2222222-0000-0000-0000-000000000001',
       payment_date: '2024-02-18T10:00:00.000Z',
       amount: 6634.88,
@@ -191,7 +191,7 @@ const memoryStore = {
   alerts: [
     {
       id: 'a1111111-0000-0000-0000-000000000001',
-      meter_id: 'm1111111-0000-0000-0000-000000000001',
+      meter_id: 'd1111111-0000-0000-0000-000000000001',
       reading_date: '2024-04-30',
       bill_id: null,
       alert_date: '2024-05-01T08:00:00.000Z',
@@ -203,7 +203,7 @@ const memoryStore = {
     },
     {
       id: 'a2222222-0000-0000-0000-000000000002',
-      meter_id: 'm2222222-0000-0000-0000-000000000002',
+      meter_id: 'd2222222-0000-0000-0000-000000000002',
       reading_date: '2024-02-29',
       bill_id: 'b2222222-0000-0000-0000-000000000002',
       alert_date: '2024-03-21T00:05:00.000Z',
@@ -216,7 +216,7 @@ const memoryStore = {
   ],
   alert_settings: [
     {
-      id: 's0000000-0000-0000-0000-000000000001',
+      id: 'f0000000-0000-0000-0000-000000000001',
       high_consumption_threshold: 500.00,
       percentage_increase_threshold: 50.00,
       overdue_days_threshold: 1,
