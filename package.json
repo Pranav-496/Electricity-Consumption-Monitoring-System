@@ -1,0 +1,30 @@
+{
+  "name": "electricity-consumption-monitoring-system",
+  "version": "1.0.0",
+  "description": "Electricity Consumption Monitoring System — Full-Stack DBMS Micro Project",
+  "main": "server/src/server.js",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "start": "npm start --prefix server",
+    "build": "npm run build --prefix client",
+    "test": "npm test --prefix server"
+  },
+  "keywords": [
+    "electricity-monitoring",
+    "dbms",
+    "postgresql",
+    "supabase",
+    "express",
+    "react",
+    "vite",
+    "tailwind"
+  ],
+  "author": "Academic Project Team",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
