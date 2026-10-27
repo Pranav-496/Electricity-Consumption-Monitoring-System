@@ -186,6 +186,7 @@ CREATE TABLE IF NOT EXISTS public.bills (
     due_date DATE NOT NULL,
     payment_status TEXT NOT NULL DEFAULT 'unpaid' CHECK (payment_status IN ('unpaid', 'partially_paid', 'paid', 'overdue')),
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now()),
+    FOREIGN KEY (meter_id) REFERENCES public.meters(id) ON DELETE CASCADE,
     FOREIGN KEY (meter_id, reading_date) REFERENCES public.consumption_readings(meter_id, reading_date) ON DELETE RESTRICT,
     CONSTRAINT uq_bill_meter_reading UNIQUE (meter_id, reading_date),
     CONSTRAINT chk_bill_dates CHECK (due_date >= bill_date AND billing_period_end >= billing_period_start)
@@ -300,6 +301,7 @@ CREATE TABLE IF NOT EXISTS public.alerts (
     severity TEXT NOT NULL DEFAULT 'warning' CHECK (severity IN ('info', 'warning', 'critical')),
     is_read BOOLEAN NOT NULL DEFAULT false,
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now()),
+    FOREIGN KEY (meter_id) REFERENCES public.meters(id) ON DELETE CASCADE,
     FOREIGN KEY (meter_id, reading_date) REFERENCES public.consumption_readings(meter_id, reading_date) ON DELETE CASCADE,
     CONSTRAINT uq_alert_reading_type UNIQUE (meter_id, reading_date, alert_type)
 );
