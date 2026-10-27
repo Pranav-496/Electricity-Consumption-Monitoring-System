@@ -262,12 +262,16 @@ const db = {
   // Consumers
   async getConsumers(filters = {}) {
     if (isLiveSupabase) {
-      let query = supabaseAdmin.from('consumers').select('*, meters(*)');
-      if (filters.is_active !== undefined) query = query.eq('is_active', filters.is_active);
-      if (filters.consumer_user_id) query = query.eq('consumer_user_id', filters.consumer_user_id);
-      const { data, error } = await query;
-      if (error) throw error;
-      return data;
+      try {
+        let query = supabaseAdmin.from('consumers').select('*, meters(*)');
+        if (filters.is_active !== undefined) query = query.eq('is_active', filters.is_active);
+        if (filters.consumer_user_id) query = query.eq('consumer_user_id', filters.consumer_user_id);
+        const { data, error } = await query;
+        if (error) throw error;
+        return data;
+      } catch (err) {
+        console.warn('[Database] Supabase getConsumers fallback:', err.message);
+      }
     }
     let list = [...memoryStore.consumers];
     if (filters.is_active !== undefined) list = list.filter(c => c.is_active === filters.is_active);
@@ -280,9 +284,13 @@ const db = {
 
   async getConsumerById(id) {
     if (isLiveSupabase) {
-      const { data, error } = await supabaseAdmin.from('consumers').select('*, meters(*)').eq('id', id).single();
-      if (error) return null;
-      return data;
+      try {
+        const { data, error } = await supabaseAdmin.from('consumers').select('*, meters(*)').eq('id', id).single();
+        if (error) throw error;
+        return data;
+      } catch (err) {
+        console.warn('[Database] Supabase getConsumerById fallback:', err.message);
+      }
     }
     const consumer = memoryStore.consumers.find(c => c.id === id);
     if (!consumer) return null;
@@ -329,12 +337,16 @@ const db = {
   // Meters
   async getMeters(filters = {}) {
     if (isLiveSupabase) {
-      let query = supabaseAdmin.from('meters').select('*, consumers(*), tariffs(*)');
-      if (filters.consumer_id) query = query.eq('consumer_id', filters.consumer_id);
-      if (filters.meter_status) query = query.eq('meter_status', filters.meter_status);
-      const { data, error } = await query;
-      if (error) throw error;
-      return data;
+      try {
+        let query = supabaseAdmin.from('meters').select('*, consumers(*), tariffs(*)');
+        if (filters.consumer_id) query = query.eq('consumer_id', filters.consumer_id);
+        if (filters.meter_status) query = query.eq('meter_status', filters.meter_status);
+        const { data, error } = await query;
+        if (error) throw error;
+        return data;
+      } catch (err) {
+        console.warn('[Database] Supabase getMeters fallback:', err.message);
+      }
     }
     let list = [...memoryStore.meters];
     if (filters.consumer_id) list = list.filter(m => m.consumer_id === filters.consumer_id);
@@ -406,18 +418,26 @@ const db = {
   // Tariffs
   async getTariffs() {
     if (isLiveSupabase) {
-      const { data, error } = await supabaseAdmin.from('tariffs').select('*').order('name');
-      if (error) throw error;
-      return data;
+      try {
+        const { data, error } = await supabaseAdmin.from('tariffs').select('*').order('name');
+        if (error) throw error;
+        return data;
+      } catch (err) {
+        console.warn('[Database] Supabase getTariffs fallback:', err.message);
+      }
     }
     return [...memoryStore.tariffs];
   },
 
   async getTariffById(id) {
     if (isLiveSupabase) {
-      const { data, error } = await supabaseAdmin.from('tariffs').select('*').eq('id', id).single();
-      if (error) return null;
-      return data;
+      try {
+        const { data, error } = await supabaseAdmin.from('tariffs').select('*').eq('id', id).single();
+        if (error) throw error;
+        return data;
+      } catch (err) {
+        console.warn('[Database] Supabase getTariffById fallback:', err.message);
+      }
     }
     return memoryStore.tariffs.find(t => t.id === id) || null;
   },
@@ -458,12 +478,16 @@ const db = {
   // Consumption Readings
   async getConsumptionReadings(filters = {}) {
     if (isLiveSupabase) {
-      let query = supabaseAdmin.from('v_consumption_readings').select('*').order('reading_date', { ascending: false });
-      if (filters.meter_id) query = query.eq('meter_id', filters.meter_id);
-      if (filters.consumer_id) query = query.eq('consumer_id', filters.consumer_id);
-      const { data, error } = await query;
-      if (error) throw error;
-      return data;
+      try {
+        let query = supabaseAdmin.from('v_consumption_readings').select('*').order('reading_date', { ascending: false });
+        if (filters.meter_id) query = query.eq('meter_id', filters.meter_id);
+        if (filters.consumer_id) query = query.eq('consumer_id', filters.consumer_id);
+        const { data, error } = await query;
+        if (error) throw error;
+        return data;
+      } catch (err) {
+        console.warn('[Database] Supabase getConsumptionReadings fallback:', err.message);
+      }
     }
 
     let list = [...memoryStore.consumption_readings];
@@ -559,30 +583,40 @@ const db = {
   },
 
   // Bills
+  _getMemoryBills(filters = {}) {
+    let list = memoryStore.bills.map(b => {
+      const meter = memoryStore.meters.find(m => m.id === b.meter_id);
+      const consumer = meter ? memoryStore.consumers.find(c => c.id === meter.consumer_id) : null;
+      const payments = memoryStore.payments.filter(p => p.bill_id === b.id);
+      return {
+        ...b,
+        meters: meter ? { ...meter, consumers: consumer } : null,
+        payments
+      };
+    });
+
+    if (filters.payment_status) list = list.filter(b => b.payment_status === filters.payment_status);
+    if (filters.meter_id) list = list.filter(b => b.meter_id === filters.meter_id);
+    list.sort((a, b) => new Date(b.bill_date) - new Date(a.bill_date));
+    return list;
+  },
+
   async getBills(filters = {}) {
     let list = [];
     if (isLiveSupabase) {
-      let query = supabaseAdmin.from('bills').select('*, meters(*, consumers(*)), payments(*)').order('bill_date', { ascending: false });
-      if (filters.payment_status) query = query.eq('payment_status', filters.payment_status);
-      if (filters.meter_id) query = query.eq('meter_id', filters.meter_id);
-      const { data, error } = await query;
-      if (error) throw error;
-      list = data;
+      try {
+        let query = supabaseAdmin.from('bills').select('*, meters(*, consumers(*)), payments(*)').order('bill_date', { ascending: false });
+        if (filters.payment_status) query = query.eq('payment_status', filters.payment_status);
+        if (filters.meter_id) query = query.eq('meter_id', filters.meter_id);
+        const { data, error } = await query;
+        if (error) throw error;
+        list = data;
+      } catch (err) {
+        console.warn('[Database] Supabase getBills fallback:', err.message);
+        list = this._getMemoryBills(filters);
+      }
     } else {
-      list = memoryStore.bills.map(b => {
-        const meter = memoryStore.meters.find(m => m.id === b.meter_id);
-        const consumer = meter ? memoryStore.consumers.find(c => c.id === meter.consumer_id) : null;
-        const payments = memoryStore.payments.filter(p => p.bill_id === b.id);
-        return {
-          ...b,
-          meters: meter ? { ...meter, consumers: consumer } : null,
-          payments
-        };
-      });
-
-      if (filters.payment_status) list = list.filter(b => b.payment_status === filters.payment_status);
-      if (filters.meter_id) list = list.filter(b => b.meter_id === filters.meter_id);
-      list.sort((a, b) => new Date(b.bill_date) - new Date(a.bill_date));
+      list = this._getMemoryBills(filters);
     }
 
     // Attach total paid & outstanding balance
@@ -713,12 +747,16 @@ const db = {
 
   async getPayments(filters = {}) {
     if (isLiveSupabase) {
-      let query = supabaseAdmin.from('payments').select('*, bills(*, meters(*, consumers(*)))').order('payment_date', { ascending: false });
-      if (filters.bill_id) query = query.eq('bill_id', filters.bill_id);
-      if (filters.payment_mode) query = query.eq('payment_mode', filters.payment_mode);
-      const { data, error } = await query;
-      if (error) throw error;
-      return data;
+      try {
+        let query = supabaseAdmin.from('payments').select('*, bills(*, meters(*, consumers(*)))').order('payment_date', { ascending: false });
+        if (filters.bill_id) query = query.eq('bill_id', filters.bill_id);
+        if (filters.payment_mode) query = query.eq('payment_mode', filters.payment_mode);
+        const { data, error } = await query;
+        if (error) throw error;
+        return data;
+      } catch (err) {
+        console.warn('[Database] Supabase getPayments fallback:', err.message);
+      }
     }
 
     let list = memoryStore.payments.map(p => {
@@ -740,13 +778,17 @@ const db = {
   // Alerts
   async getAlerts(filters = {}) {
     if (isLiveSupabase) {
-      let query = supabaseAdmin.from('alerts').select('*, meters(*, consumers(*))').order('alert_date', { ascending: false });
-      if (filters.is_read !== undefined) query = query.eq('is_read', filters.is_read);
-      if (filters.severity) query = query.eq('severity', filters.severity);
-      if (filters.alert_type) query = query.eq('alert_type', filters.alert_type);
-      const { data, error } = await query;
-      if (error) throw error;
-      return data;
+      try {
+        let query = supabaseAdmin.from('alerts').select('*, meters(*, consumers(*))').order('alert_date', { ascending: false });
+        if (filters.is_read !== undefined) query = query.eq('is_read', filters.is_read);
+        if (filters.severity) query = query.eq('severity', filters.severity);
+        if (filters.alert_type) query = query.eq('alert_type', filters.alert_type);
+        const { data, error } = await query;
+        if (error) throw error;
+        return data;
+      } catch (err) {
+        console.warn('[Database] Supabase getAlerts fallback:', err.message);
+      }
     }
 
     let list = memoryStore.alerts.map(a => {

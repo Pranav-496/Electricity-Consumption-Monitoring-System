@@ -141,6 +141,7 @@ const generateReportData = async (reportType, filters = {}) => {
       break;
     }
 
+    case 'monthly_billing':
     case 'billing_summary': {
       rows = bills.map(b => ({
         bill_id: b.id,
